@@ -1,6 +1,6 @@
 ﻿# Gradle central dependencies (TOML) migration script
 
-Simple script helping with migration to a new Gradle Central declaration of dependencies in TOML file.
+Simple script helping with migration to a new [Gradle Central declaration](https://docs.gradle.org/nightly/userguide/platforms.html#sub:central-declaration-of-dependencies) of dependencies in TOML file.
 
 This script was used just for my internal purposes. I made it available, just because it can be useful for somebody else. It is not the best way how to do it. It is just a dirty script of how to do it fast. The configuration is possible by variables inside of the script.
 
