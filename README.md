@@ -13,7 +13,7 @@ This script was used just for my internal purposes. I made it available, just be
   - Allows converting classic dependency with included version variable into plain form (useful for Kotlin conversion).
 
 ## Requirements
- - Gradle 6.9 with TOML support. The script itself will work on Gradle 6.7+, but you need at least 6.9 to use the central dependencies mechanism.
+ - Gradle 7.0+ with [centralized dependency](https://docs.gradle.org/7.0/release-notes.html#centralized-versions) support. The script itself will work on Gradle 6.7+, but you need at least 6.9 to use the central dependencies mechanism.
  - You need to have dependency declaration in this format: `"com.squareup.okhttp3:okhttp:1.0.0"` or with some variable like `"com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpLibVersion}"`, different declaration format are not supported.
 
 ## Usage
@@ -22,7 +22,7 @@ This script was used just for my internal purposes. I made it available, just be
     `apply(from = "tomldeps.gradle.kts")`
  2. Change the `operation` variable inside of the script to `GENERATE_TOML`.
  3. Run `gradlew`.
- 4. Check generated `gradle/dependencies.toml`.
+ 4. Check generated `gradle/libs.versions.toml`.
  5. If you are not satisfied with aliases you can modify `generateAlias` function inside of the script and then you can run `gradlew` again.
  6. You can do manual changes in TOML file, but don't forgot to change the operation back to `NOTHING` to avoid overridden by the next run of `gradlew`.
  7. If you are satisfied with TOML file, change `operation` to `REPLACE_DEPS_BY_TOML` a run `gradlew` again.

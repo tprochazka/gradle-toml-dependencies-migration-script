@@ -20,10 +20,10 @@ enum class Operation {
 val operation = Operation.NOTHING
 
 // Name of file to scan in all modules, change to build.gradle.kts if you use Kotlin already
-val inputFilesName = "build.gradle.kts"
+val inputFilesName = "build.gradle"
 
 // Input/Output location for TOML file
-val toml = File(projectDir, "gradle/dependencies.toml")
+val toml = File(projectDir, "gradle/libs.versions.toml")
 
 // Will replace custom variables like "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpLibVersion}" by used version directly
 val replaceVariablesWithDirectVersion = true
@@ -710,7 +710,7 @@ afterEvaluate {
             }
 
             toml.appendText("\n")
-            toml.appendText("[dependencies]\n")
+            toml.appendText("[libraries]\n")
 
             fun writeDependency(d: Dependency) {
                 val alias = generateAlias(d)
