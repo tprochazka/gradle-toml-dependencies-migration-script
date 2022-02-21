@@ -216,7 +216,7 @@ afterEvaluate {
             val t: TomlParseResult = Toml.parse(toml.readText())
             println("Reading TOML file..." + t.errors())
             if (!t.hasErrors()) {
-                val td = t.getTable("dependencies")
+                val td = t.getTable("libraries")
                 val libs = HashMap<String, String>()
                 td!!.keySet().forEach { alias ->
                     val lib = td.getTableOrEmpty(alias).getString("module")?.also {
