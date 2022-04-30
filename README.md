@@ -35,10 +35,11 @@ By default script will always create a copy of your build script, you can contro
 Steps are the same as for script in Kotlin, but you need to do a few additional things.
 
  1. Copy file *tomldeps.gradle.kts* to root of your project and put this to the end of your root *build.gradle.kts*:
-    `apply from: 'tomldeps.gradle.kts'`
- 2. Change `inputFilesName` to `build.gradle` only.
+    `apply from: 'tomldeps.gradle.kts'`.
+ 2. Change the `operation` variable inside of the script to `GENERATE_TOML`.
+ 3. Change `inputFilesName` to `build.gradle` only and run `gradlew` once to do a conversion to `.kts`.
  4. Replace old `build.gradle` files with converted one `build.gradle.kts` you can do it file by file, to keep project buildable all the time. Automatic to Kotlin conversion is very simple, just basic stuff. In some cases, it can even break something. You definitely need to finish conversion manually.
- 5. Continue with steps 2. to 6. of "**Build scripts already in Kotlin**".
+ 5. Continue with steps 4. to 6. of "**Build scripts already in Kotlin**".
  6. Change `inputFilesName` back to `build.gradle.kts`
  7. Continue with steps 7. and 8. of "**Build scripts already in Kotlin**".
 
