@@ -23,7 +23,7 @@ val operation = Operation.NOTHING
 val inputFilesName = "build.gradle.kts"
 
 // Input/Output location for TOML file
-val toml = File(projectDir, "gradle/dependencies.toml")
+val toml = File(projectDir, "gradle/libs.versions.toml")
 
 // Will replace custom variables like "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpLibVersion}" by used version directly
 val replaceVariablesWithDirectVersion = true
@@ -182,23 +182,29 @@ afterEvaluate {
                     "kotlinStdlibJdk" -> versionAlias = "kotlinStdlib"
                     "androidxTestEspressoCo" -> versionAlias = "androidxTestEspresso"
                 }
-                toml.appendText("""$versionAlias = "${d1.version}"""" + "\n")
-
-                v.value.forEach { d ->
-                    // toml.appendText("     $d\n")
-                    versionsAliases[d] = versionAlias
+                if (d1.version != null) {
+                    toml.appendText("""$versionAlias = "${d1.version}"""" + "\n")
+                    v.value.forEach { d ->
+                        // toml.appendText("     $d\n")
+                        versionsAliases[d] = versionAlias
+                    }
                 }
+
             }
 
             toml.appendText("\n")
-            toml.appendText("[dependencies]\n")
+            toml.appendText("[libraries]\n")
 
             fun writeDependency(d: Dependency) {
                 val alias = generateAlias(d)
                 val isVersionRef = versionsAliases.containsKey(d)
                 val version = if (isVersionRef) versionsAliases[d] else d.version
-                val type = if (isVersionRef) ".ref" else ""
-                toml.appendText("""$alias = { module = "${d.group}:${d.name}", version$type="$version" }""")
+                if (version != null) {
+                    val type = if (isVersionRef) ".ref" else ""
+                    toml.appendText("""$alias = { module = "${d.group}:${d.name}", version$type="$version" }""")
+                } else {
+                    toml.appendText("""$alias = { module = "${d.group}:${d.name}"}""")
+                }
                 toml.appendText("\n")
             }
 

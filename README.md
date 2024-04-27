@@ -4,6 +4,8 @@ Simple script helping with migration to a new [Gradle Central declaration](https
 
 This script was used just for my internal purposes. I made it available, just because it can be useful for somebody else. It is not the best way how to do it. It is just a dirty script of how to do it fast. The configuration is possible by variables inside of the script.
 
+Warning: Script is not compatible with gradle configuration cache. Please use org.gradle.unsafe.configuration-cache=false i gradle.properties or --no-configuration-cache from command line to disabled it. 
+
 ## Features
   - Generate TOML file from existing multi-module project dependencies.
   - Automatically generate `[versions]` block inside of TOML based on the same version.
@@ -30,8 +32,8 @@ This script was used just for my internal purposes. I made it available, just be
 
 By default script will always create a copy of your build script, you can control it by `replaceOriginalFiles` variable.
 
-###  Build scripts in Groovy
-
+###  Build scripts in Groovy[tomldeps.gradle.kts](tomldeps.gradle.kts)
+[tomldeps.gradle.kts](tomldeps.gradle.kts)
 Steps are the same as for script in Kotlin, but you need to do a few additional things.
 
  1. Copy file *tomldeps.gradle.kts* to root of your project and put this to the end of your root *build.gradle.kts*:

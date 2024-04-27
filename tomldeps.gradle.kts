@@ -701,12 +701,14 @@ afterEvaluate {
                     "kotlinStdlibJdk" -> versionAlias = "kotlinStdlib"
                     "androidxTestEspressoCo" -> versionAlias = "androidxTestEspresso"
                 }
-                toml.appendText("""$versionAlias = "${d1.version}"""" + "\n")
-
-                v.value.forEach { d ->
-                    // toml.appendText("     $d\n")
-                    versionsAliases[d] = versionAlias
+                if (d1.version != null) {
+                    toml.appendText("""$versionAlias = "${d1.version}"""" + "\n")
+                    v.value.forEach { d ->
+                        // toml.appendText("     $d\n")
+                        versionsAliases[d] = versionAlias
+                    }
                 }
+
             }
 
             toml.appendText("\n")
@@ -716,8 +718,12 @@ afterEvaluate {
                 val alias = generateAlias(d)
                 val isVersionRef = versionsAliases.containsKey(d)
                 val version = if (isVersionRef) versionsAliases[d] else d.version
-                val type = if (isVersionRef) ".ref" else ""
-                toml.appendText("""$alias = { module = "${d.group}:${d.name}", version$type="$version" }""")
+                if (version != null) {
+                    val type = if (isVersionRef) ".ref" else ""
+                    toml.appendText("""$alias = { module = "${d.group}:${d.name}", version$type="$version" }""")
+                } else {
+                    toml.appendText("""$alias = { module = "${d.group}:${d.name}"}""")
+                }
                 toml.appendText("\n")
             }
 
